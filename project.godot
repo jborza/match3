@@ -11,5 +11,17 @@ config_version=5
 [application]
 
 config/name="Match3"
+run/main_scene="res://Level1.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Game="*res://Game.gd"
+
+[display]
+
+window/size/viewport_width=640
+window/size/viewport_height=960
+window/size/resizable=false
+window/stretch/scale=2.0

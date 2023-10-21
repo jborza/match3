@@ -1,0 +1,51 @@
+[gd_scene load_steps=5 format=3 uid="uid://mscekc8b8dfk"]
+
+[ext_resource type="Script" path="res://Game.gd" id="1_t0xo1"]
+[ext_resource type="PackedScene" uid="uid://dc871axij2nfk" path="res://Tile.tscn" id="2_whnrx"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_pcaql"]
+font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_2k47k"]
+font_size = 24
+
+[node name="Node2D" type="Node2D"]
+
+[node name="TimeLabel" type="Label" parent="."]
+offset_left = 80.0
+offset_top = -226.0
+offset_right = 143.0
+offset_bottom = -189.0
+text = "00:00
+"
+label_settings = SubResource("LabelSettings_pcaql")
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_left = -149.0
+offset_top = -230.0
+offset_right = -88.0
+offset_bottom = -204.0
+text = "Score: 0"
+label_settings = SubResource("LabelSettings_2k47k")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Game" type="Node2D" parent="." node_paths=PackedStringArray("score_label", "time_label")]
+script = ExtResource("1_t0xo1")
+score_label = NodePath("../ScoreLabel")
+time_label = NodePath("../TimeLabel")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="Tile" parent="." instance=ExtResource("2_whnrx")]
+type = 4
+
+[node name="Tile2" parent="." instance=ExtResource("2_whnrx")]
+position = Vector2(46, 0)
+type = 3
+
+[node name="Tile3" parent="." instance=ExtResource("2_whnrx")]
+position = Vector2(-39, 0)
+
+[connection signal="timeout" from="Timer" to="Game" method="_on_timer_timeout"]
