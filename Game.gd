@@ -25,7 +25,6 @@ func _ready():
 	var tile_scene = load("res://Tile.tscn")
 	for x in range(-100,100,32):
 		for y in range(-100,100,32):
-			print("Making tile at ",x,",",y)
 			create_tile(tile_scene,x,y)
 			
 func create_tile(tile_scene, x, y):
