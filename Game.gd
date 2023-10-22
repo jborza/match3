@@ -10,6 +10,7 @@ var time_seconds : int = 0
 
 enum TileType {blue,green,purple,red,yellow}
 
+var boo : int
 
 func add_score(addition):
 	score += addition
@@ -25,16 +26,20 @@ func timer_tick():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	load_sprite_textures()
-	
+	if(GameManager.loaded):
+		return
 	# generate tiles
 	# https://docs.godotengine.org/en/stable/tutorials/scripting/nodes_and_scene_instances.html
 	var tile_scene = load("res://Tile.tscn")
-	for x in range(-160,160,32):
-		var tile = tile_scene.instantiate()
-		tile.type = randi() % TileType.size()
-		tile.position.x = x
-		add_child(tile)
-
+	for x in range(-100,100,32):
+		for y in range(-100,100,32):
+			print("Making tile at ",x,",",y)
+			var tile = tile_scene.instantiate()
+			tile.type = randi() % TileType.size()
+			tile.position.x = x
+			tile.position.y = y
+			add_child(tile)
+	GameManager.loaded = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
