@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var type : TileType
+@export var type : GameManager.TileType
 
 var pressed : bool = false
 var original_mouse_position
@@ -8,12 +8,9 @@ var original_tile_position
 
 var size_x : int
 var size_y : int
-
-enum TileType {blue,green,purple,red,yellow}
 	
 func _ready():
-	var game = get_node("/root/Game")
-	$Sprite.texture = game.get_image(type)
+	$Sprite.texture = GameManager.get_image(type)
 	size_x = $Sprite.texture.get_width()
 	size_y = $Sprite.texture.get_height()
 
