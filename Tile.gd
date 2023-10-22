@@ -3,27 +3,48 @@ extends Node2D
 @export var type : TileType
 
 var pressed : bool = false
-var original_position
+var original_mouse_position
+var original_tile_position
+
+var size_x : int
+var size_y : int
 
 enum TileType {blue,green,purple,red,yellow}
 	
 func _ready():
 	var game = get_node("/root/Game")
 	$Sprite.texture = game.get_image(type)
+	size_x = $Sprite.texture.get_width()
+	size_y = $Sprite.texture.get_height()
+
+func position_to_size(changed_position):
+	changed_position.x = min(changed_position.x, size_x)
+	changed_position.x = max(changed_position.x, -size_x)
+	changed_position.y = min(changed_position.y, size_y)
+	changed_position.y = max(changed_position.y, -size_y)
+	return changed_position
 
 func _input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
 		if event.pressed:
 			print("Clicked")
 			pressed = true
-			original_position = get_global_mouse_position()
+			original_mouse_position = get_global_mouse_position()
+			original_tile_position = position
 		else:
 			print("Released")
-			global_position = original_position
+			global_position = original_tile_position
 			pressed = false
 	if event is InputEventMouseMotion && pressed:
-		print("Motion")
-		# todo move only in 4 directions: up,down,left,right
-		global_position = get_global_mouse_position()
+		# move only in 4 directions: up,down,left,right
+		var changed_position = get_global_mouse_position() - original_mouse_position
+		changed_position = position_to_size(changed_position)
+		if(abs(changed_position.x) > abs(changed_position.y)):
+			#move by x
+			global_position.x = original_tile_position.x + changed_position.x
+			global_position.y = original_tile_position.y
+		else: #move by y
+			global_position.x = original_tile_position.x
+			global_position.y = original_tile_position.y + changed_position.y
 		# todo can't move in the direction of the wall
 
