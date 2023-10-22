@@ -25,6 +25,15 @@ func timer_tick():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	load_sprite_textures()
+	
+	# generate tiles
+	# https://docs.godotengine.org/en/stable/tutorials/scripting/nodes_and_scene_instances.html
+	var tile_scene = load("res://Tile.tscn")
+	for x in range(-160,160,32):
+		var tile = tile_scene.instantiate()
+		tile.type = randi() % TileType.size()
+		tile.position.x = x
+		add_child(tile)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

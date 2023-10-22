@@ -48,4 +48,6 @@ type = 3
 [node name="Tile3" parent="." instance=ExtResource("2_whnrx")]
 position = Vector2(-39, 0)
 
+[node name="Tiles" type="Node2D" parent="."]
+
 [connection signal="timeout" from="Timer" to="Game" method="_on_timer_timeout"]
