@@ -42,7 +42,6 @@ func load_sprite_texture(index):
 	var image_path = str("res://Sprites/tile_", name, ".png")
 	var imported_resource = load(image_path)
 	images.append(imported_resource)
-	#images[name] = imported_resource
 	
 func load_sprite_textures():
 	load_sprite_texture(TileType.blue)
