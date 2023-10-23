@@ -24,12 +24,12 @@ func position_to_size(changed_position):
 func _input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
 		if event.pressed:
-			print("Clicked")
+			print("Clicked @ ",position)
 			pressed = true
 			original_mouse_position = get_global_mouse_position()
 			original_tile_position = position
-		else:
-			print("Released")
+		elif pressed:
+			print("Released @ ",position," pressed=",pressed)
 			global_position = original_tile_position
 			pressed = false
 	if event is InputEventMouseMotion && pressed:
@@ -44,4 +44,4 @@ func _input_event(viewport, event, shape_idx):
 			global_position.x = original_tile_position.x
 			global_position.y = original_tile_position.y + changed_position.y
 		# todo can't move in the direction of the wall
-
+		# todo move the neighboring tile
