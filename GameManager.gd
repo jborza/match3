@@ -27,10 +27,12 @@ func load_sprite_textures():
 func add_tile(tile):
 	tiles.append(tile)
 
-func get_tile_by_location(location) -> CharacterBody2D:
+func get_tile_by_location(location, tile_to_ignore) -> CharacterBody2D:
 	var closest_tile
 	var closest_location = INF
 	for tile in tiles:
+		if(tile == tile_to_ignore):
+			continue
 		var loc = sqrt(pow(tile.position.x - location.x, 2) + pow(tile.position.y - location.y, 2))
 		if loc < closest_location:
 			closest_location = loc

@@ -8,6 +8,8 @@ var original_tile_position
 
 var size_x : int
 var size_y : int
+
+var movement_neighbor
 	
 func _ready():
 	$Sprite.texture = GameManager.get_image(type)
@@ -29,8 +31,11 @@ func _input_event(viewport, event, shape_idx):
 			original_mouse_position = get_global_mouse_position()
 			original_tile_position = position
 		elif pressed:
-			print("Released @ ",position," pressed=",pressed)
-			global_position = original_tile_position
+			print("Released @ ", position)
+			# move to the mouse position
+			var self_position = original_tile_position
+			position = movement_neighbor.position
+			movement_neighbor.position = original_tile_position
 			pressed = false
 	if event is InputEventMouseMotion && pressed:
 		# move only in 4 directions: up,down,left,right
@@ -45,5 +50,6 @@ func _input_event(viewport, event, shape_idx):
 			global_position.y = original_tile_position.y + changed_position.y
 		# todo can't move in the direction of the wall
 		# todo move the neighboring tile
-		var neighbor = GameManager.get_tile_by_location(get_global_mouse_position())
-		print("Neighbor:", neighbor.position)
+		var neighbor = GameManager.get_tile_by_location(get_global_mouse_position(), self)		
+		print("Neighbor:", neighbor.position, " self:", self.position)
+		movement_neighbor = neighbor
