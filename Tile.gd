@@ -45,3 +45,5 @@ func _input_event(viewport, event, shape_idx):
 			global_position.y = original_tile_position.y + changed_position.y
 		# todo can't move in the direction of the wall
 		# todo move the neighboring tile
+		var neighbor = GameManager.get_tile_by_location(get_global_mouse_position())
+		print("Neighbor:", neighbor.position)

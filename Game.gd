@@ -6,7 +6,6 @@ var time_seconds : int = 0
 @export var score_label : Label
 @export var time_label : Label
 
-
 func add_score(addition):
 	score += addition
 
@@ -32,7 +31,8 @@ func create_tile(tile_scene, x, y):
 	tile.type = randi() % GameManager.TileType.size()
 	tile.position.x = x
 	tile.position.y = y
-	add_child(tile)		
+	add_child(tile)
+	GameManager.add_tile(tile)	
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

@@ -1,6 +1,7 @@
 extends Node
 
 @export var images : Array[CompressedTexture2D]
+var tiles : Array[CharacterBody2D]
 
 enum TileType {blue,green,purple,red,yellow}
 
@@ -22,3 +23,16 @@ func load_sprite_textures():
 	load_sprite_texture(TileType.purple)
 	load_sprite_texture(TileType.red)
 	load_sprite_texture(TileType.yellow)
+
+func add_tile(tile):
+	tiles.append(tile)
+
+func get_tile_by_location(location) -> CharacterBody2D:
+	var closest_tile
+	var closest_location = INF
+	for tile in tiles:
+		var loc = sqrt(pow(tile.position.x - location.x, 2) + pow(tile.position.y - location.y, 2))
+		if loc < closest_location:
+			closest_location = loc
+			closest_tile = tile
+	return closest_tile
