@@ -1,5 +1,5 @@
 extends Node2D
-
+var rng : RandomNumberGenerator
 var score: int = 0
 var time_seconds: int = 0
 
@@ -24,6 +24,10 @@ func timer_tick():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# generate tiles
+	rng = RandomNumberGenerator.new()
+	rng.seed = hash("boo")
+	rng.state = 1
+	
 	# https://docs.godotengine.org/en/stable/tutorials/scripting/nodes_and_scene_instances.html
 	var tile_scene = load("res://Tile.tscn")
 	var position_x = 0
@@ -78,7 +82,7 @@ func shuffle_set():
 
 func create_tile(tile_scene, x, y, position_x, position_y):
 	var tile = tile_scene.instantiate()
-	tile.type = randi() % GameManager.TileType.size()
+	tile.type = rng.randi() % GameManager.TileType.size()
 	tile.position.x = x
 	tile.position.y = y
 	tile.position_x = position_x
