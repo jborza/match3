@@ -10,6 +10,9 @@ var size_x : int
 var size_y : int
 
 var movement_neighbor
+
+@export var position_x : int
+@export var position_y : int
 	
 func _ready():
 	$Sprite.texture = GameManager.get_image(type)
@@ -23,6 +26,11 @@ func position_to_size(changed_position):
 	changed_position.y = max(changed_position.y, -size_y)
 	return changed_position
 
+func swap_with_neighbor():
+	position = movement_neighbor.position
+	movement_neighbor.position = original_tile_position
+
+
 func _input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
 		if event.pressed:
@@ -33,9 +41,7 @@ func _input_event(viewport, event, shape_idx):
 		elif pressed:
 			print("Released @ ", position)
 			# move to the mouse position
-			var self_position = original_tile_position
-			position = movement_neighbor.position
-			movement_neighbor.position = original_tile_position
+			swap_with_neighbor()
 			pressed = false
 	if event is InputEventMouseMotion && pressed:
 		# move only in 4 directions: up,down,left,right

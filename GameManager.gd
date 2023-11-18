@@ -38,3 +38,9 @@ func get_tile_by_location(location, tile_to_ignore) -> CharacterBody2D:
 			closest_location = loc
 			closest_tile = tile
 	return closest_tile
+	
+func get_tile_color(x, y):
+	#find tiles by x,y
+	for tile in tiles:
+		if tile.position_x == x && tile.position_y == y:
+			return tile.type
