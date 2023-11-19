@@ -36,6 +36,7 @@ func _ready():
 		for y in range(-100, 100, 32):
 			create_tile(tile_scene, x, y, position_x, position_y)
 			position_y += 1
+		position_y = 0
 		position_x += 1
 
 	shuffle_set()
@@ -48,13 +49,15 @@ func board_is_ready_x():
 
 	#go left to right
 	#another line until done
-	for y in range(height - 2):
+	for y in range(height):
 		for x in range(width - 2):
 			print(x, ",", y, ":", GameManager.get_tile_color(x, y))
 			#if 3 are the same, return false
 			if (
-				(GameManager.get_tile_color(x, y) == GameManager.get_tile_color(x + 1, y))
-				== GameManager.get_tile_color(x + 2, y)
+				(GameManager.get_tile_color(x, y) 
+				== GameManager.get_tile_color(x + 1, y))
+				and (GameManager.get_tile_color(x, y) 
+				== GameManager.get_tile_color(x + 2, y))
 			):
 				return Vector2(x, y)
 
@@ -67,16 +70,21 @@ func board_is_ready_y():
 	return null
 
 
-func shuffle_tile():
+func shuffle_tile_vertically():
 	pass
+
+
+func shuffle_tile_horizontally():
+	pass
+
 
 
 func shuffle_set():
 	# repeat until the board is shuffled
 	while board_is_ready_x() != null:
-		shuffle_tile()
+		shuffle_tile_vertically()
 	while board_is_ready_y() != null:
-		shuffle_tile()
+		shuffle_tile_horizontally()
 	pass
 
 
